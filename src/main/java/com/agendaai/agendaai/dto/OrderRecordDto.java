@@ -1,4 +1,4 @@
-package com.agendaai.agendaai.dtos;
+package com.agendaai.agendaai.dto;
 
 public class OrderRecordDto {
     
