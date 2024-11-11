@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.stereotype.Repository;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -18,14 +15,14 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "TB_PRODUCT")
+@Table(name = "TB_JOB")
 public class Job implements Serializable {
     @Serial
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @NotNull
@@ -34,9 +31,10 @@ public class Job implements Serializable {
     private float amount;
     private String description;
 
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
+    private Schedule schedule;
+
     @OneToMany
     private List<Order> orders;
-
-//    @OneToOne
-//    private Schedule schedule;
 }

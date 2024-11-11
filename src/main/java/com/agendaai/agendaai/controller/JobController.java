@@ -3,6 +3,7 @@ package com.agendaai.agendaai.controller;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import com.agendaai.agendaai.model.Schedule;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,52 +28,58 @@ public class JobController {
 
     private final JobService jobService;
 
-    @SuppressWarnings("rawtypes")
-    @PostMapping("/api/jobs")
-    public ResponseEntity createJob(
-        @RequestBody @Valid JobRecordDto jobRecordDto
-        ) {
+    @PostMapping("/api/job")
+    public ResponseEntity<Job> createJob(@RequestBody @Valid JobRecordDto job) {
         Job tmpJob = new Job();
-        BeanUtils.copyProperties(jobRecordDto, tmpJob);
-        
+        BeanUtils.copyProperties(job, tmpJob);
+
         return ResponseEntity.status(HttpStatus.CREATED)
-            .body(jobService
-            .createJob(tmpJob));
+                .body(jobService.createJob(tmpJob));
     }
 
     @GetMapping("/api/jobs")
     public ResponseEntity<ArrayList<Job>> getAllJobs() {
         ArrayList<Job> jobs = (ArrayList<Job>) jobService.getAllJobs();
 
-        if(jobs != null)
-            return ResponseEntity.ok(jobs);
-        
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        if(jobs == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(jobs);
     }
 
-    @GetMapping("/api/jobs/{jobId}")
+    @GetMapping("/api/job/{jobId}")
     public ResponseEntity<Job> getJobById(@PathVariable UUID jobId) {
         Job pModel = jobService.getJobById(jobId);
-        if(pModel != null)
-            return ResponseEntity.ok(pModel);
-        
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        if(pModel == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(pModel);
     }
 
-    @PutMapping("/api/jobs/{jobId}")
-    public ResponseEntity<Job> updateJobById(@PathVariable UUID jobId, @RequestBody Job pModel) {
+    @PutMapping("/api/job/{jobId}")
+    public ResponseEntity<Job> updateJobInformationById(@PathVariable UUID jobId, @RequestBody Job pModel) {
         Job newModel = jobService.updateJob(jobId, pModel);
-        
-        return ResponseEntity.ok(newModel);
+        if (newModel == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(newModel);
     }
 
-    @DeleteMapping("/api/jobs/{jobId}")
+    @PutMapping("api/job/schedule/{jobId}")
+    public ResponseEntity<Job> updateJobScheduleById(@PathVariable UUID jobId, @RequestBody Schedule schedule) {
+        Job newModel = jobService.updateSchedule(jobId, schedule);
+        if (newModel == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(newModel);
+    }
+
+    @DeleteMapping("/api/job/{jobId}")
     public ResponseEntity<Job> deleteJobById(@PathVariable UUID jobId) {
-        jobService.deleteJob(jobId);
+        if (!jobService.deleteJob(jobId))
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
         return ResponseEntity.noContent().build();
     }
-    
-    
-
-
 }
