@@ -20,7 +20,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping("/api/order")
+    @PostMapping("/order")
     public ResponseEntity<Order> createOrder(@RequestBody @Valid OrderRecordDto order) {
         Order tmpOrder = new Order();
         BeanUtils.copyProperties(order, tmpOrder);
@@ -29,7 +29,7 @@ public class OrderController {
                 .body(orderService.createOrder(tmpOrder));
     }
 
-    @GetMapping("/api/orders")
+    @GetMapping("/orders")
     public ResponseEntity<ArrayList<Order>> getAllOrders() {
         ArrayList<Order> orders = (ArrayList<Order>) orderService.getAllOrders();
 
@@ -39,7 +39,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(orders);
     }
 
-    @GetMapping("/api/order/{orderId}")
+    @GetMapping("/order/{orderId}")
     public ResponseEntity<Order> getOrderById(@PathVariable UUID orderId) {
         Order pModel = orderService.getOrderById(orderId);
 
@@ -49,7 +49,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(pModel);
     }
 
-    @PutMapping("/api/order/{orderId}")
+    @PutMapping("/order/{orderId}")
     public ResponseEntity<Order> updateOrderInformationById(@PathVariable UUID orderId, @RequestBody Order pModel) {
         Order newModel = orderService.updateOrder(orderId, pModel);
         if (newModel == null)
@@ -58,7 +58,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(newModel);
     }
 
-    @DeleteMapping("/api/order/{orderId}")
+    @DeleteMapping("/order/{orderId}")
     public ResponseEntity<Order> deleteOrderById(@PathVariable UUID orderId) {
         if (!orderService.deleteOrder(orderId))
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

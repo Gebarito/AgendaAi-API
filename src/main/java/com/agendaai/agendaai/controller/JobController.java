@@ -1,6 +1,7 @@
 package com.agendaai.agendaai.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.agendaai.agendaai.model.Schedule;
@@ -28,7 +29,7 @@ public class JobController {
 
     private final JobService jobService;
 
-    @PostMapping("/api/job")
+    @PostMapping("/job")
     public ResponseEntity<Job> createJob(@RequestBody @Valid JobRecordDto job) {
         Job tmpJob = new Job();
         BeanUtils.copyProperties(job, tmpJob);
@@ -37,8 +38,8 @@ public class JobController {
                 .body(jobService.createJob(tmpJob));
     }
 
-    @GetMapping("/api/jobs")
-    public ResponseEntity<ArrayList<Job>> getAllJobs() {
+    @GetMapping("/jobs")
+    public ResponseEntity<ArrayList<Job>> getAHundredJobs() {
         ArrayList<Job> jobs = (ArrayList<Job>) jobService.getAllJobs();
 
         if(jobs == null)
@@ -47,17 +48,27 @@ public class JobController {
         return ResponseEntity.status(HttpStatus.OK).body(jobs);
     }
 
-    @GetMapping("/api/job/{jobId}")
+    @GetMapping("/job/{jobId}")
     public ResponseEntity<Job> getJobById(@PathVariable UUID jobId) {
-        Job pModel = jobService.getJobById(jobId);
+        Job job = jobService.getJobById(jobId);
 
-        if(pModel == null)
+        if(job == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
-        return ResponseEntity.status(HttpStatus.OK).body(pModel);
+        return ResponseEntity.status(HttpStatus.OK).body(job);
     }
 
-    @PutMapping("/api/job/{jobId}")
+    @GetMapping("/job/{jobCategory}")
+    public ResponseEntity<ArrayList<Job>> getJobsByCategory(@PathVariable String jobCategory) {
+        ArrayList<Job> jobs= (ArrayList<Job>)jobService.getJobsByCategory(jobCategory);
+
+        if(jobs == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(jobs);
+    }
+
+    @PutMapping("/job/{jobId}")
     public ResponseEntity<Job> updateJobInformationById(@PathVariable UUID jobId, @RequestBody Job pModel) {
         Job newModel = jobService.updateJob(jobId, pModel);
         if (newModel == null)
@@ -75,7 +86,7 @@ public class JobController {
         return ResponseEntity.status(HttpStatus.OK).body(newModel);
     }
 
-    @DeleteMapping("/api/job/{jobId}")
+    @DeleteMapping("/job/{jobId}")
     public ResponseEntity<Job> deleteJobById(@PathVariable UUID jobId) {
         if (!jobService.deleteJob(jobId))
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

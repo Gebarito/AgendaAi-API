@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,11 +30,16 @@ public class Job implements Serializable {
     private String name;
     @NotNull
     private float amount;
-    private String description;
+    @NotNull
+    private String category; //TODO:adicionar no astah.
+    @NotNull
+    private Timestamp dateCreated; //TODO:adicionar no astah.
 
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     private Schedule schedule;
+
+    private String description;
 
     @OneToMany
     private List<Order> orders;

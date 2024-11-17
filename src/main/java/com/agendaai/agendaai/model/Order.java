@@ -25,9 +25,13 @@ public class Order implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @NotNull
     private float amount;
+    @NotNull
     private String status;
+    @NotNull
     private Timestamp dateCreated;
+    @NotNull
     private Timestamp dateAppointment;
 
     @NotNull

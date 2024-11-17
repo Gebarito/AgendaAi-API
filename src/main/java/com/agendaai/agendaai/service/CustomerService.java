@@ -25,7 +25,6 @@ public class CustomerService {
             log.error("F=saveCustomer M=Customer com CPF {} já existe", customer.getCpf());
             return null;
         }
-
         return customerRepository.save(customer);
     }
 
@@ -47,19 +46,19 @@ public class CustomerService {
             log.error("F=deleteCustomerById M=Customer de Id {} não encontrado", customerId);
             return false;
         }
-
         customerRepository.deleteById(customerId);
 
         if (getCustomerById(customerId) != null) {
             log.error("F=deleteCustomerById M=Não foi possível excluir o Customer de ID {}", customerId);
             return false;
         }
-
         return true;
     }
 
     public Customer getCustomerById(long customerId) {
-        return customerRepository.findById(customerId).orElse(null);
+        return customerRepository
+                .findById(customerId)
+                .orElse(null);
     }
 
     public Customer getCustomerByCpf(String cpf) {

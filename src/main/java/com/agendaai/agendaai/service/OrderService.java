@@ -3,10 +3,13 @@ package com.agendaai.agendaai.service;
 import com.agendaai.agendaai.model.Order;
 import com.agendaai.agendaai.model.Schedule;
 import com.agendaai.agendaai.repository.OrderRepository;
+import com.agendaai.agendaai.utils.OrderInterface;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +20,8 @@ public class OrderService {
 
     @Transactional
     public Order createOrder(Order order) {
+        order.setDateCreated(Timestamp.valueOf(LocalDateTime.now()));
+        order.setStatus(OrderInterface.PENDING);
         return orderRepository.save(order);
     }
 

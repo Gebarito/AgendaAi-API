@@ -8,7 +8,6 @@ import java.sql.Timestamp;
 
 public record OrderRecordDto(
                 @NotNull float amount,
-                Timestamp dateCreated,
-                Timestamp dateAppointment,
-                Job job) {
+                @NotNull Timestamp dateAppointment,
+                @NotNull Job job) {
 }

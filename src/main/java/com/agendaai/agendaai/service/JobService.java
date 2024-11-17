@@ -1,11 +1,15 @@
 package com.agendaai.agendaai.service;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 import com.agendaai.agendaai.model.Schedule;
 import com.agendaai.agendaai.repository.ScheduleRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.agendaai.agendaai.model.Job;
@@ -22,18 +26,25 @@ public class JobService {
 
     @Transactional
     public Job createJob(Job job) {
+        job.setDateCreated(Timestamp.valueOf(LocalDateTime.now()));
         scheduleRepository.save(job.getSchedule());
         return jobRepository.save(job);
     }
 
     public List<Job> getAllJobs() {
-        return jobRepository.findAll();
+        return jobRepository
+                .findAllByOrderByDateCreated(PageRequest.of(0, 100));
     }
 
     public Job getJobById(UUID id) {
         return jobRepository
             .findById(id)
             .orElse(null);
+    }
+
+    public List<Job> getJobsByCategory(String category) {
+        return jobRepository
+                .findAllByCategory(category);
     }
 
     @Transactional
