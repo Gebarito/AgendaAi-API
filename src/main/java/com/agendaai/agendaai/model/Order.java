@@ -1,14 +1,10 @@
 package com.agendaai.agendaai.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -26,11 +22,19 @@ public class Order implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @NotNull
     private float amount;
+    @NotNull
     private String status;
+    @NotNull
     private Timestamp dateCreated;
+    @NotNull
     private Timestamp dateAppointment;
+
+    @NotNull
+    @ManyToOne
+    private Job job;
 }
