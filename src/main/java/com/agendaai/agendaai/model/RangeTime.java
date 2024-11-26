@@ -8,6 +8,6 @@ import java.sql.Timestamp;
 @Embeddable
 @Data
 public class RangeTime {
-    private Timestamp start;
-    private Timestamp end;
+    private String start;
+    private String end;
 }

@@ -17,7 +17,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "TB_JOB")
-public class Job implements Serializable {
+public class Jobs implements Serializable {
     @Serial
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 1L;
@@ -31,9 +31,9 @@ public class Job implements Serializable {
     @NotNull
     private float amount;
     @NotNull
-    private String category; //TODO:adicionar no astah.
+    private String category;
     @NotNull
-    private Timestamp dateCreated; //TODO:adicionar no astah.
+    private Timestamp dateCreated;
 
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
@@ -41,6 +41,6 @@ public class Job implements Serializable {
 
     private String description;
 
-    @OneToMany
-    private List<Order> orders;
+    @OneToMany(cascade = CascadeType.REMOVE)
+    private List<Orders> orders;
 }

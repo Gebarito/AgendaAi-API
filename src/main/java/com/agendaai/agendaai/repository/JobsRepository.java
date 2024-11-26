@@ -1,6 +1,6 @@
 package com.agendaai.agendaai.repository;
 
-import com.agendaai.agendaai.model.Job;
+import com.agendaai.agendaai.model.Jobs;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface JobRepository extends JpaRepository<Job, UUID>{
+public interface JobsRepository extends JpaRepository<Jobs, UUID>{
 
-    List<Job> findAllByOrderByDateCreated(Pageable pageable);
+    List<Jobs> findAllByOrderByDateCreated(Pageable pageable);
 
-    List<Job> findAllByCategory(String category);
+    List<Jobs> findAllByCategory(String category);
     
 }
