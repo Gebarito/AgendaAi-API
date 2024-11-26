@@ -11,7 +11,7 @@ public record BusinessRecordDto(
                         String password,
                         @NotBlank String telNumber,
                         @NotBlank String cep,
-                        @NotBlank String endereco) {
+                        @NotBlank String address) {
     public Business toBusiness(){
         Business business = new Business();
         business.setName(name);
@@ -20,7 +20,7 @@ public record BusinessRecordDto(
         business.setPassword(password);
         business.setTelNumber(telNumber);
         business.setCep(cep);
-        business.setEndereco(endereco);
+        business.setAddress(address);
         return business;
     }
 }

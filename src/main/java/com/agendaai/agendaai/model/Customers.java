@@ -36,7 +36,7 @@ public class Customers implements Serializable{
     @NotNull
     private String cep;
     @NotNull
-    private String endereco;
+    private String address;
 
     @OneToMany
     private List<Orders> orders;

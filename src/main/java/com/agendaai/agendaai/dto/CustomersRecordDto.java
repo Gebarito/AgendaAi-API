@@ -11,7 +11,8 @@ public record CustomersRecordDto(
                         String password,
                         @NotBlank String telNumber,
                         @NotBlank String cep,
-                        @NotBlank String endereco) {
+                        @NotBlank String address) {
+
     public Customers toCustomers(){
         Customers customers = new Customers();
         customers.setName(name);
@@ -20,7 +21,7 @@ public record CustomersRecordDto(
         customers.setPassword(password);
         customers.setTelNumber(telNumber);
         customers.setCep(cep);
-        customers.setEndereco(endereco);
+        customers.setAddress(address);
         return customers;
     }
 }

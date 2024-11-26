@@ -13,7 +13,6 @@ import java.util.UUID;
 public interface JobsRepository extends JpaRepository<Jobs, UUID>{
 
     List<Jobs> findAllByOrderByDateCreated(Pageable pageable);
-
     List<Jobs> findAllByCategory(String category);
     
 }
