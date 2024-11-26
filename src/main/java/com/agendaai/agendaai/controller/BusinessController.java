@@ -1,6 +1,7 @@
 package com.agendaai.agendaai.controller;
 
 import com.agendaai.agendaai.dto.BusinessRecordDto;
+import com.agendaai.agendaai.dto.DocumentDto;
 import com.agendaai.agendaai.model.Business;
 import com.agendaai.agendaai.service.BusinessService;
 import jakarta.validation.Valid;
@@ -29,15 +30,15 @@ public class BusinessController {
         Business business = businessService.getBusinessById(businessId);
         if(business == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.ok(business);
+        return ResponseEntity.status(HttpStatus.OK).body(business);
     }
 
     @GetMapping("/business")
-    public ResponseEntity<Business> getBusinessById(@RequestBody String cnpj) {
-        Business business = businessService.getBusinessByCnpj(cnpj);
+    public ResponseEntity<Business> getBusinessById(@RequestBody DocumentDto document) {
+        Business business = businessService.getBusinessByCnpj(document.cnpj());
         if(business == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        return ResponseEntity.ok(business);
+        return ResponseEntity.status(HttpStatus.OK).body(business);
     }
 
     @PutMapping("/business/update")
@@ -46,13 +47,13 @@ public class BusinessController {
         if (savedBusiness == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.ok(savedBusiness);
+        return ResponseEntity.status(HttpStatus.OK).body(savedBusiness);
     }
 
     @DeleteMapping("/business/delete/{businessId}")
     public ResponseEntity<Business> deleteBusinessById(@PathVariable long businessId) {
         if (!businessService.deleteBusinessById(businessId))
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

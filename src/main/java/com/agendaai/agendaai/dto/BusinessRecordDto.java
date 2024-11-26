@@ -8,8 +8,10 @@ public record BusinessRecordDto(
                         @NotBlank String name,
                         @NotBlank @Email String email,
                         @NotBlank String cnpj,
-                        @NotBlank String password,
-                        @NotBlank String telNumber) {
+                        String password,
+                        @NotBlank String telNumber,
+                        @NotBlank String cep,
+                        @NotBlank String endereco) {
     public Business toBusiness(){
         Business business = new Business();
         business.setName(name);
@@ -17,6 +19,8 @@ public record BusinessRecordDto(
         business.setCnpj(cnpj);
         business.setPassword(password);
         business.setTelNumber(telNumber);
+        business.setCep(cep);
+        business.setEndereco(endereco);
         return business;
     }
 }

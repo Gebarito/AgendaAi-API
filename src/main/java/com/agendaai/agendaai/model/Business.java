@@ -32,7 +32,11 @@ public class Business implements Serializable {
     private String password;
     @NotNull
     private String telNumber;
+    @NotNull
+    private String cep;
+    @NotNull
+    private String endereco;
 
     @OneToMany
-    private List<Job> jobs;
+    private List<Jobs> jobs;
 }

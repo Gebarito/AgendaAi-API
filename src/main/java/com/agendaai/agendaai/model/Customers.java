@@ -14,7 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name="TB_CUSTOMER")
-public class Customer implements Serializable{
+public class Customers implements Serializable{
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -33,7 +33,11 @@ public class Customer implements Serializable{
     private String password;
     @NotNull
     private String telNumber;
+    @NotNull
+    private String cep;
+    @NotNull
+    private String endereco;
 
     @OneToMany
-    private List<Order> orders;
+    private List<Orders> orders;
 }

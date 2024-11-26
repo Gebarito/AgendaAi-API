@@ -16,7 +16,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "TB_ORDER")
-public class Order implements Serializable {
+public class Orders implements Serializable {
     @Serial
     @SuppressWarnings("unused")
     private static final long serialVersionUID = 1L;
@@ -35,6 +35,6 @@ public class Order implements Serializable {
     private Timestamp dateAppointment;
 
     @NotNull
-    @ManyToOne
-    private Job job;
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    private Jobs jobs;
 }
