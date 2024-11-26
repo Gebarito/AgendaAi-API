@@ -1,9 +1,6 @@
 package com.agendaai.agendaai.dto;
 
 import com.agendaai.agendaai.model.Orders;
-import jakarta.validation.constraints.NotNull;
-
-import java.sql.Timestamp;
 
 public record OrdersUpdateDto(
                               String status) {
