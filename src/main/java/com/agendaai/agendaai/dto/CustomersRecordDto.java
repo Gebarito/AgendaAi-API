@@ -12,6 +12,7 @@ public record CustomersRecordDto(
                         @NotBlank String telNumber,
                         @NotBlank String cep,
                         @NotBlank String address) {
+
     public Customers toCustomers(){
         Customers customers = new Customers();
         customers.setName(name);
