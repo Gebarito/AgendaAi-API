@@ -26,6 +26,7 @@ public class BusinessService {
             log.error("F=saveBusiness M=Business com CNPJ {} já existe", business.getCnpj());
             return null;
         }
+        business.setJobs(List.of());
 
         return businessRepository.save(business);
     }
@@ -39,6 +40,12 @@ public class BusinessService {
         }
         business.setId(existBusiness.getId());
         business.setPassword(existBusiness.getPassword());
+        List<Jobs> jobsBusiness = existBusiness.getJobs();
+        if (!(jobsBusiness == null)) {
+            business.setJobs(List.of());
+        } else {
+            business.setJobs(jobsBusiness);
+        }
         return businessRepository.save(business);
     }
 
@@ -47,10 +54,6 @@ public class BusinessService {
         if (getBusinessById(businessId) == null) {
             log.error("F=deleteBusinessById M=Business de Id {} não encontrado", businessId);
             return false;
-        }
-        List<Jobs> jobs = businessRepository.findJobsById(businessId).getJobs();
-        for (Jobs job : jobs) {
-            jobsRepository.deleteById(job.getId());
         }
         businessRepository.deleteById(businessId);
 

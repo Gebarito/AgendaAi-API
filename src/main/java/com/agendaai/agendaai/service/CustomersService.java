@@ -2,6 +2,7 @@ package com.agendaai.agendaai.service;
 
 import java.util.List;
 
+import com.agendaai.agendaai.model.Jobs;
 import com.agendaai.agendaai.model.Orders;
 import com.agendaai.agendaai.repository.CustomersRepository;
 import com.agendaai.agendaai.repository.OrdersRepository;
@@ -28,6 +29,7 @@ public class CustomersService {
             log.error("F=saveCustomer M=Customers com CPF {} já existe", customers.getCpf());
             return null;
         }
+        customers.setOrders(List.of());
         return customersRepository.save(customers);
     }
 
@@ -40,6 +42,12 @@ public class CustomersService {
         }
         customers.setId(existCustomers.getId());
         customers.setPassword(existCustomers.getPassword());
+        List<Orders> ordersCustomers = existCustomers.getOrders();
+        if (!(ordersCustomers == null)) {
+            customers.setOrders(List.of());
+        } else {
+            customers.setOrders(ordersCustomers);
+        }
         return customersRepository.save(customers);
     }
 
@@ -50,9 +58,9 @@ public class CustomersService {
             return false;
         }
 
-        List<Orders> orders = customersRepository.findOrdersById(customerId).getOrders();
-        for (Orders order : orders) {
-            ordersRepository.deleteById(order.getId());
+        if (customersRepository.findOrdersById(customerId).getOrders() == null) {
+            log.error("F=deleteCustomerById M=Customers {} possui orders, por isso não poderá ser excluido pelo endpoint", customerId);
+            return false;
         }
         customersRepository.deleteById(customerId);
 
