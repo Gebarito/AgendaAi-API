@@ -33,7 +33,6 @@ public class BusinessServiceTest {
 
     @Test
     void testSaveBusiness_NewBusiness() {
-        // Arrange
         BusinessRecordDto dto = new BusinessRecordDto(
                 "Business Name",
                 "business@example.com",
@@ -56,7 +55,6 @@ public class BusinessServiceTest {
 
     @Test
     void testSaveBusiness_ExistingBusiness() {
-        // Arrange
         BusinessRecordDto dto = new BusinessRecordDto(
                 "Business Name",
                 "business@example.com",
@@ -77,7 +75,6 @@ public class BusinessServiceTest {
 
     @Test
     void testUpdateBusiness_ExistingBusiness() {
-        // Arrange
         BusinessRecordDto dto = new BusinessRecordDto(
                 "Business Name",
                 "updated@example.com",
@@ -104,7 +101,6 @@ public class BusinessServiceTest {
 
     @Test
     void testUpdateBusiness_NonExistingBusiness() {
-        // Arrange
         BusinessRecordDto dto = new BusinessRecordDto(
                 "Updated Business Name",
                 "updated@example.com",
@@ -124,7 +120,6 @@ public class BusinessServiceTest {
 
     @Test
     void testDeleteBusinessById_Success() {
-        // Arrange
         BusinessRecordDto dto = new BusinessRecordDto(
                 "Business Name",
                 "business@example.com",
@@ -149,7 +144,6 @@ public class BusinessServiceTest {
 
     @Test
     void testDeleteBusinessById_BusinessNotFound() {
-        // Arrange
         when(businessRepository.findById(1L)).thenReturn(Optional.empty());
 
         boolean result = businessService.deleteBusinessById(1L);
@@ -160,7 +154,6 @@ public class BusinessServiceTest {
 
     @Test
     void testGetBusinessById() {
-        // Arrange
         BusinessRecordDto dto = new BusinessRecordDto(
                 "Business Name",
                 "business@example.com",
@@ -182,7 +175,6 @@ public class BusinessServiceTest {
 
     @Test
     void testGetBusinessByCnpj() {
-        // Arrange
         BusinessRecordDto dto = new BusinessRecordDto(
                 "Business Name",
                 "business@example.com",
