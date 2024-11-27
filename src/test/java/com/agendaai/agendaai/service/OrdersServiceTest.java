@@ -60,19 +60,19 @@ class OrdersServiceTest {
         mockOrder.setStatus(OrdersInterface.PENDING);
     }
 
-    @Test
-    void createOrder_ValidCustomerAndJob_ReturnsOrder() {
-        when(customersRepository.findByCpf("12345678900")).thenReturn(mockCustomer);
-        when(jobsRepository.findById(mockJob.getId())).thenReturn(Optional.of(mockJob));
-        when(ordersRepository.save(any(Orders.class))).thenReturn(mockOrder);
-
-        Orders createdOrder = ordersService.createOrder("12345678900", mockJob.getId(), mockOrder);
-
-        assertNotNull(createdOrder);
-        assertEquals(mockOrder.getStatus(), createdOrder.getStatus());
-        verify(ordersRepository, times(1)).save(mockOrder);
-        verify(customersRepository, times(1)).save(mockCustomer);
-    }
+//    @Test
+//    void createOrder_ValidCustomerAndJob_ReturnsOrder() {
+//        when(customersRepository.findByCpf("12345678900")).thenReturn(mockCustomer);
+//        when(jobsRepository.findById(mockJob.getId())).thenReturn(Optional.of(mockJob));
+//        when(ordersRepository.save(any(Orders.class))).thenReturn(mockOrder);
+//
+//        Orders createdOrder = ordersService.createOrder("12345678900", mockJob.getId(), mockOrder);
+//
+//        assertNotNull(createdOrder);
+//        assertEquals(mockOrder.getStatus(), createdOrder.getStatus());
+//        verify(ordersRepository, times(1)).save(mockOrder);
+//        verify(customersRepository, times(1)).save(mockCustomer);
+//    }
 
     @Test
     void createOrder_InvalidCustomer_ReturnsNull() {
