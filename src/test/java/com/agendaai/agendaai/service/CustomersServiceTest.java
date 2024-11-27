@@ -36,7 +36,6 @@ public class CustomersServiceTest {
 
     @Test
     void testSaveCustomer_NewCustomer() {
-        // Arrange
         CustomersRecordDto dto = new CustomersRecordDto(
                 "Customer Name",
                 "customer@example.com",
@@ -61,7 +60,6 @@ public class CustomersServiceTest {
 
     @Test
     void testSaveCustomer_ExistingCustomer() {
-        // Arrange
         CustomersRecordDto dto = new CustomersRecordDto(
                 "Customer Name",
                 "customer@example.com",
@@ -84,7 +82,6 @@ public class CustomersServiceTest {
 
     @Test
     void testUpdateCustomer_ExistingCustomer() {
-        // Arrange
         CustomersRecordDto dto = new CustomersRecordDto(
                 "Updated Customer Name",
                 "updated@example.com",
@@ -112,7 +109,6 @@ public class CustomersServiceTest {
 
     @Test
     void testUpdateCustomer_NonExistingCustomer() {
-        // Arrange
         CustomersRecordDto dto = new CustomersRecordDto(
                 "Updated Customer Name",
                 "updated@example.com",
@@ -134,7 +130,6 @@ public class CustomersServiceTest {
 
     @Test
     void testDeleteCustomerById_Success() {
-        // Arrange
         CustomersRecordDto dto = new CustomersRecordDto(
                 "Customer Name",
                 "customer@example.com",
@@ -160,20 +155,16 @@ public class CustomersServiceTest {
 
     @Test
     void testDeleteCustomerById_CustomerNotFound() {
-        // Arrange
         when(customersRepository.findById(1L)).thenReturn(Optional.empty());
 
-        // Act
         boolean result = customersService.deleteCustomerById(1L);
 
-        // Assert
         assertFalse(result);
         verify(customersRepository, never()).deleteById(anyLong());
     }
 
     @Test
     void testGetCustomerById() {
-        // Arrange
         CustomersRecordDto dto = new CustomersRecordDto(
                 "Customer Name",
                 "customer@example.com",
@@ -187,17 +178,14 @@ public class CustomersServiceTest {
         customer.setId(1L);
         when(customersRepository.findById(1L)).thenReturn(Optional.of(customer));
 
-        // Act
         Customers result = customersService.getCustomerById(1L);
 
-        // Assert
         assertNotNull(result);
         assertEquals(dto.name(), result.getName());
     }
 
     @Test
     void testGetCustomerByCpf() {
-        // Arrange
         CustomersRecordDto dto = new CustomersRecordDto(
                 "Customer Name",
                 "customer@example.com",
@@ -210,10 +198,8 @@ public class CustomersServiceTest {
         Customers customer = dto.toCustomers();
         when(customersRepository.findByCpf("12345678900")).thenReturn(customer);
 
-        // Act
         Customers result = customersService.getCustomerByCpf("12345678900");
 
-        // Assert
         assertNotNull(result);
         assertEquals(dto.name(), result.getName());
     }
