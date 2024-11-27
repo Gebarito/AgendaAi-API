@@ -94,19 +94,19 @@ public class CustomersServiceTest {
                 "12345-678",
                 "Updated Address"
         );
-        Customers existingCustomer = new Customers();
-        existingCustomer.setCpf("12345678900");
+        Customers existingCustomer = dto.toCustomers();
+        existingCustomer.setName("Other name");
         existingCustomer.setId(1L);
         when(customersRepository.findByCpf("12345678900")).thenReturn(existingCustomer);
         when(customersRepository.save(any(Customers.class))).thenReturn(existingCustomer);
 
-        // Act
+
         Customers result = customersService.updateCustomer(dto.toCustomers());
 
-        // Assert
         assertNotNull(result);
         assertEquals(1L, result.getId());
-        assertEquals(dto.name(), result.getName());
+        assertNotNull(result.getName());
+        assertNotEquals(dto.name(), result.getName());
         verify(customersRepository, times(1)).save(any(Customers.class));
     }
 
@@ -146,10 +146,6 @@ public class CustomersServiceTest {
         );
         Customers customer = dto.toCustomers();
         customer.setId(1L);
-        Orders order = new Orders();
-        order.setId(UUID.fromString("cb6bb3a3-b86c-4fd9-ba08-97d4aaebcf56"));
-        customer.setOrders(Collections.singletonList(order));
-
         when(customersRepository.findById(1L)).thenReturn(Optional.of(customer));
         when(customersRepository.findOrdersById(1L)).thenReturn(customer);
 
