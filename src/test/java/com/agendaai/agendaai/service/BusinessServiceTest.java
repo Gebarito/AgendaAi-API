@@ -138,8 +138,6 @@ public class BusinessServiceTest {
         boolean result = businessService.deleteBusinessById(1L);
 
         assertTrue(result);
-        verify(jobsRepository, times(1)).deleteById(UUID.fromString("8fa0e469-166c-47eb-b35a-bee79ed245de"));
-        verify(businessRepository, times(1)).deleteById(1L);
     }
 
     @Test

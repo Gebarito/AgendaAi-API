@@ -55,12 +55,11 @@ public class BusinessService {
             log.error("F=deleteBusinessById M=Business de Id {} não encontrado", businessId);
             return false;
         }
-        businessRepository.deleteById(businessId);
-
-        if (getBusinessById(businessId) != null) {
-            log.error("F=deleteBusinessById M=Não foi possível excluir o Business de ID {}", businessId);
+        if (businessRepository.findJobsById(businessId).getJobs() != null) {
+            log.error("F=deleteBusinessById M=Business {} possui jobs, por isso não poderá ser excluido pelo endpoint", businessId);
             return false;
         }
+        businessRepository.deleteById(businessId);
 
         return true;
     }

@@ -38,7 +38,7 @@ public class JobsService {
         List<Jobs> listOfBusinessJobs = existingBusiness.getJobs();
         listOfBusinessJobs.add(jobsRepository.save(jobs));
         existingBusiness.setJobs(listOfBusinessJobs);
-        return businessRepository.save(existingBusiness).getJobs().getLast(); //TODO: Não está salvando no business
+        return businessRepository.save(existingBusiness).getJobs().getLast();
     }
 
     public List<Jobs> getAllJobs() {
