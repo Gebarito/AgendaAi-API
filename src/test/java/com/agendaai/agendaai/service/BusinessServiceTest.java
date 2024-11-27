@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 import java.util.Optional;
 import java.util.UUID;
 
@@ -92,6 +91,7 @@ public class BusinessServiceTest {
         existingBusiness.setId(1L);
         when(businessRepository.findByCnpj("123456789")).thenReturn(existingBusiness);
         when(businessRepository.save(any(Business.class))).thenReturn(existingBusiness);
+
 
         Business result = businessService.updateBusiness(dto.toBusiness());
 
