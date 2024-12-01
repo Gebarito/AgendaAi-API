@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @AllArgsConstructor
 @RestController
 public class BusinessController {
@@ -25,6 +27,17 @@ public class BusinessController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newBusiness);
     }
 
+    @GetMapping("/business/all")
+    public ResponseEntity<ArrayList<Business>> getAHundredBusiness() {
+        ArrayList<Business> business = (ArrayList<Business>) businessService.getAllBusiness();
+
+        if(business == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(business);
+    }
+
+
     @GetMapping("/business/{businessId}")
     public ResponseEntity<Business> getBusinessById(@PathVariable long businessId) {
         Business business = businessService.getBusinessById(businessId);
@@ -34,7 +47,7 @@ public class BusinessController {
     }
 
     @GetMapping("/business")
-    public ResponseEntity<Business> getBusinessById(@RequestBody DocumentDto document) {
+    public ResponseEntity<Business> getBusinessByCnpj(@RequestBody DocumentDto document) {
         Business business = businessService.getBusinessByCnpj(document.cnpj());
         if(business == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

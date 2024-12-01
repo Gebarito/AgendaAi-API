@@ -34,6 +34,7 @@ public class JobsService {
             return null;
         }
         jobs.setDateCreated(Timestamp.valueOf(LocalDateTime.now()));
+        jobs.setActive(true);
         scheduleRepository.save(jobs.getSchedule());
         List<Jobs> listOfBusinessJobs = existingBusiness.getJobs();
         listOfBusinessJobs.add(jobsRepository.save(jobs));
@@ -43,7 +44,7 @@ public class JobsService {
 
     public List<Jobs> getAllJobs() {
         return jobsRepository
-                .findAllByOrderByDateCreated(PageRequest.of(0, 100));
+                .findAllByActiveOrderByDateCreated(true, PageRequest.of(0, 100));
     }
 
     public Jobs getJobById(UUID id) {
@@ -54,7 +55,7 @@ public class JobsService {
 
     public List<Jobs> getJobsByCategory(String category) {
         return jobsRepository
-                .findAllByCategory(category);
+                .findAllByCategoryAndActive(category,true);
     }
 
     @Transactional
@@ -79,6 +80,17 @@ public class JobsService {
         if (existingJobs != null) {
             schedule.setId(existingJobs.getSchedule().getId());
             existingJobs.setSchedule(scheduleRepository.save(schedule));
+
+            return jobsRepository.save(existingJobs);
+        }
+        return null;
+    }
+
+    @Transactional
+    public Jobs cancelJobs(UUID jobId) {
+        Jobs existingJobs = getJobById(jobId);
+        if (existingJobs != null) {
+            existingJobs.setActive(false);
 
             return jobsRepository.save(existingJobs);
         }

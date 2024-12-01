@@ -17,7 +17,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -79,6 +78,15 @@ public class JobsController {
     @PutMapping("/jobs/schedule/{jobId}")
     public ResponseEntity<Jobs> updateJobScheduleById(@PathVariable UUID jobId, @RequestBody Schedule schedule) {
         Jobs newModel = jobsService.updateSchedule(jobId, schedule);
+        if (newModel == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(newModel);
+    }
+
+    @PutMapping("/jobs/cancel/{jobId}")
+    public ResponseEntity<Jobs> cancelJobById(@PathVariable UUID jobId) {
+        Jobs newModel = jobsService.cancelJobs(jobId);
         if (newModel == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 

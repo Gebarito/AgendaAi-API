@@ -9,8 +9,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -73,6 +76,21 @@ public class BusinessServiceTest {
         verify(businessRepository, never()).save(any());
     }
 
+    @Test
+    void testGetAllBusiness_ShouldReturnListOfJobs() {
+        // Arrange
+        Business business1 = new Business();
+        Business business2 = new Business();
+        List<Business> businessList = Arrays.asList(business1, business2);
+        when(businessRepository.findAllByOrderByCep(PageRequest.of(0, 100))).thenReturn(businessList);
+
+        // Act
+        List<Business> allBusiness = businessService.getAllBusiness();
+
+        // Assert
+        assertNotNull(allBusiness);
+        assertEquals(2, allBusiness.size());
+    }
     @Test
     void testUpdateBusiness_ExistingBusiness() {
         BusinessRecordDto dto = new BusinessRecordDto(

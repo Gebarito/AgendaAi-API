@@ -9,6 +9,7 @@ public record JobsRecordDto(
         @NotNull String name,
         @NotNull float amount,
         @NotNull String category,
+        boolean active,
         String description,
         Schedule schedule) {
     public Jobs toJob() {

@@ -49,8 +49,6 @@ public class JobsServiceTest {
 //        job.setDescription("Test job");
 //        Schedule schedule = new Schedule();
 //        job.setSchedule(schedule);
-//        job.setOrders(List.of());
-//        business.setJobs(List.of(job));
 //
 //        when(businessRepository.findByCnpj(cnpj)).thenReturn(business);
 //        when(jobsRepository.save(any(Jobs.class))).thenReturn(job);
@@ -87,7 +85,7 @@ public class JobsServiceTest {
         Jobs job1 = new Jobs();
         Jobs job2 = new Jobs();
         List<Jobs> jobsList = Arrays.asList(job1, job2);
-        when(jobsRepository.findAllByOrderByDateCreated(PageRequest.of(0, 100))).thenReturn(jobsList);
+        when(jobsRepository.findAllByActiveOrderByDateCreated(true, PageRequest.of(0, 100))).thenReturn(jobsList);
 
         // Act
         List<Jobs> allJobs = jobsService.getAllJobs();
