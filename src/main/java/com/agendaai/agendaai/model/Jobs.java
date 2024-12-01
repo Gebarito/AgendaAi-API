@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -34,6 +33,8 @@ public class Jobs implements Serializable {
     private String category;
     @NotNull
     private Timestamp dateCreated;
+    @NotNull
+    private Boolean active;
 
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
@@ -41,6 +42,4 @@ public class Jobs implements Serializable {
 
     private String description;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    private List<Orders> orders;
 }

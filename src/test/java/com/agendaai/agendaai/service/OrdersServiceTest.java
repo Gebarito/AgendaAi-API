@@ -3,6 +3,7 @@ package com.agendaai.agendaai.service;
 import com.agendaai.agendaai.model.Customers;
 import com.agendaai.agendaai.model.Jobs;
 import com.agendaai.agendaai.model.Orders;
+import com.agendaai.agendaai.model.Schedule;
 import com.agendaai.agendaai.repository.CustomersRepository;
 import com.agendaai.agendaai.repository.JobsRepository;
 import com.agendaai.agendaai.repository.OrdersRepository;
@@ -51,6 +52,12 @@ class OrdersServiceTest {
 
         mockJob = new Jobs();
         mockJob.setId(UUID.randomUUID());
+        mockJob.setName("Job1");
+        mockJob.setAmount(100.0f);
+        mockJob.setCategory("Category1");
+        mockJob.setDescription("Test mockJob");
+        Schedule schedule = new Schedule();
+        mockJob.setSchedule(schedule);
 
         mockOrder = new Orders();
         mockOrder.setId(UUID.randomUUID());
@@ -62,11 +69,11 @@ class OrdersServiceTest {
 
 //    @Test
 //    void createOrder_ValidCustomerAndJob_ReturnsOrder() {
-//        when(customersRepository.findByCpf("12345678900")).thenReturn(mockCustomer);
+//        when(customersRepository.findByCpf("12345678901")).thenReturn(mockCustomer);
 //        when(jobsRepository.findById(mockJob.getId())).thenReturn(Optional.of(mockJob));
 //        when(ordersRepository.save(any(Orders.class))).thenReturn(mockOrder);
 //
-//        Orders createdOrder = ordersService.createOrder("12345678900", mockJob.getId(), mockOrder);
+//        Orders createdOrder = ordersService.createOrder("12345678901", mockJob.getId(), mockOrder);
 //
 //        assertNotNull(createdOrder);
 //        assertEquals(mockOrder.getStatus(), createdOrder.getStatus());

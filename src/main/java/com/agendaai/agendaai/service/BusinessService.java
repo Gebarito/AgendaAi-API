@@ -7,6 +7,7 @@ import com.agendaai.agendaai.repository.JobsRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,11 @@ public class BusinessService {
         business.setJobs(List.of());
 
         return businessRepository.save(business);
+    }
+
+    public List<Business> getAllBusiness() {
+        return businessRepository
+                .findAllByOrderByCep(PageRequest.of(0, 100));
     }
 
     @Transactional
