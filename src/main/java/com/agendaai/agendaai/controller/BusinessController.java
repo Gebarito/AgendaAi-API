@@ -46,8 +46,8 @@ public class BusinessController {
         return ResponseEntity.status(HttpStatus.OK).body(business);
     }
 
-    @GetMapping("/business")
-    public ResponseEntity<Business> getBusinessByCnpj(@RequestBody DocumentDto document) {
+    @GetMapping("/business/cnpj/{document}")
+    public ResponseEntity<Business> getBusinessByCnpj(@PathVariable DocumentDto document) {
         Business business = businessService.getBusinessByCnpj(document.cnpj());
         if(business == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

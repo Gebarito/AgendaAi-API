@@ -36,8 +36,8 @@ public class CustomersController {
         return ResponseEntity.ok(customers);
     }
 
-    @GetMapping("/customers/cpf")
-    public ResponseEntity<Customers> getCustomerById(@RequestBody DocumentDto document) {
+    @GetMapping("/customers/cpf/{document}")
+    public ResponseEntity<Customers> getCustomerById(@PathVariable DocumentDto document) {
         Customers customers = customersService.getCustomerByCpf(document.cpf());
         if(customers == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
