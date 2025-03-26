@@ -1,0 +1,21 @@
+# This workflow will add syhunt reports to the build process.
+# For more information, see https://www.syhunt.com/pt/?n=Docs.SyhuntIntegrationGitHub
+
+name: Syhunt test
+on:
+  push:
+    branches:
+      - main 
+jobs:
+  build:
+    runs-on: [self-hosted, Windows, X64]
+    steps:
+      - uses: actions/checkout@v2
+      - run: Start-CodeScan -pfcond 'fail-if:risk=mediumup' -output 'report.pdf'
+      - name: 'Syhunt Report'
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+         name: syhunt-report
+         path: report.pdf
+         if-no-files-found: error
